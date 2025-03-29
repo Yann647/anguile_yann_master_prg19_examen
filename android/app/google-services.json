@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "497343784029",
+    "project_id": "examen-flutter-prg19",
+    "storage_bucket": "examen-flutter-prg19.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497343784029:android:b194e8c80b4acb098519b4",
+        "android_client_info": {
+          "package_name": "sn.supinfo.anguile_yann_master_prg19_examen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlws1pxUvV154hVwcjK_YTIQwBXaZERLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
