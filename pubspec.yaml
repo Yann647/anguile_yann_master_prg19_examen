@@ -39,7 +39,7 @@ dependencies:
   cloud_firestore: ^5.6.5
   provider: ^6.1.2
   logger: ^2.5.0
-  fl_chart: ^0.70.2
+  fl_chart: ^0.63.0
 
 
   # The following adds the Cupertino Icons font to your application.

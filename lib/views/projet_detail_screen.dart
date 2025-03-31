@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../common/constante_colors.dart';
 import '../models/project_model.dart';
 import '../state_management/provider/project_provider.dart';
+import 'components/task_card.dart';
 import 'create_task_screen.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(project.title),
+        title: Text(project.title ?? 'Projet sans titre'),
         backgroundColor: kPrimaryColor,
       ),
       body: Padding(
@@ -49,7 +49,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              project.description,
+              project.description ?? 'Aucune description disponible',
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 20),
@@ -59,9 +59,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: project.tasks.length,
+                itemCount: project.tasks?.length ?? 0,
                 itemBuilder: (context, index) {
-                  final task = project.tasks[index];
+                  final task = project.tasks?[index];
+                  if (task == null) return const SizedBox();
                   return TaskCard(task: task); // Utiliser un widget personnalisé
                 },
               ),

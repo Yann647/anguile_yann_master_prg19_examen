@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/my_user.dart';
 
@@ -10,6 +10,8 @@ class AuthentificationService with ChangeNotifier {
 
   User? get user => _user;
   MyUserModel? get myUserModel => _myUserModel;
+
+  MyUserModel? get currentUser => _myUserModel;
 
   Stream<User?> get autStateChanges => _auth.authStateChanges();
 

@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +16,7 @@ class ProjectProvider with ChangeNotifier {
     try {
       final snapshot = await _firestore.collection('projects').get();
       _projects = snapshot.docs
-          .map((doc) => ProjectModel.fromFirestore(doc))
+          .map((doc) => ProjectModel.fromFirestore(doc.data(), doc.id))
           .toList();
       notifyListeners();
     } catch (e) {
@@ -31,7 +30,7 @@ class ProjectProvider with ChangeNotifier {
     try {
       final doc = await _firestore.collection('projects').doc(projectId).get();
       if (doc.exists) {
-        _currentProject = ProjectModel.fromFirestore(doc);
+        _currentProject = ProjectModel.fromFirestore(doc.data()!, doc.id);
         notifyListeners();
       } else {
         throw Exception("Projet introuvable.");
@@ -46,7 +45,7 @@ class ProjectProvider with ChangeNotifier {
   Future<void> addProject(ProjectModel project) async {
     try {
       final docRef = await _firestore.collection('projects').add(project.toMap());
-      project.id = docRef.id; // Assigner l'ID généré par Firestore
+      project.setId = docRef.id; // Assigner l'ID généré par Firestore
       _projects.add(project);
       notifyListeners();
     } catch (e) {

@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +20,7 @@ class TaskProvider with ChangeNotifier {
           .collection('tasks')
           .get();
       _tasks = snapshot.docs
-          .map((doc) => TaskModel.fromFirestore(doc))
+          .map((doc) => TaskModel.fromFirestore(doc.data(), doc.id))
           .toList();
       notifyListeners();
     } catch (e) {
@@ -40,7 +39,7 @@ class TaskProvider with ChangeNotifier {
           .doc(taskId)
           .get();
       if (doc.exists) {
-        _currentTask = TaskModel.fromFirestore(doc);
+        _currentTask = TaskModel.fromFirestore(doc.data()!, doc.id);
         notifyListeners();
       } else {
         throw Exception("Tâche introuvable.");
@@ -59,7 +58,7 @@ class TaskProvider with ChangeNotifier {
           .doc(projectId)
           .collection('tasks')
           .add(task.toMap());
-      task.id = docRef.id; // Assigner l'ID généré par Firestore
+      task.setId = docRef.id; // Assigner l'ID généré par Firestore
       _tasks.add(task);
       notifyListeners();
     } catch (e) {

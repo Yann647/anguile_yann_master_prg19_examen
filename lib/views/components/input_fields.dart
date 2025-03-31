@@ -17,7 +17,8 @@ class CustomInput extends StatefulWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.isPassWord = false,
-    this.isRequired = false
+    this.isRequired = false,
+    this.onTapCallback,
   });
 
   final TextEditingController controller;
@@ -29,6 +30,7 @@ class CustomInput extends StatefulWidget {
   final IconData? suffixIcon;
   final bool isPassWord;
   final bool isRequired;
+  final VoidCallback? onTapCallback;
   @override
   State<StatefulWidget> createState() => _CustomInputState();
 }
@@ -48,6 +50,7 @@ class _CustomInputState extends State<CustomInput> {
       controller: widget.controller,
       obscureText: widget.isPassWord,
       validator: _validateField,
+      onTap: widget.onTapCallback,
       decoration: InputDecoration(
           label: Text(widget.labelText),
           hintText: widget.hintText?? '',

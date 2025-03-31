@@ -1,4 +1,4 @@
-
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../common/constante_colors.dart';
@@ -95,54 +95,58 @@ class AdminDashboardScreen extends StatelessWidget {
     );
   }
 
-  // Widget pour afficher un graphique circulaire (pie chart)
+  // Nouveau Widget : Graphique circulaire avec fl_chart
   Widget _buildPieChart() {
-    final data = [
-      ChartData('En Cours', 12, Colors.blue),
-      ChartData('Terminés', 8, Colors.green),
-      ChartData('Annulés', 2, Colors.red),
-    ];
-
-    final series = [
-      charts.Series<ChartData, String>(
-        id: 'Projets',
-        domainFn: (ChartData data, _) => data.label,
-        measureFn: (ChartData data, _) => data.value,
-        colorFn: (ChartData data, _) =>
-            charts.ColorUtil.fromDartColor(data.color),
-        data: data,
-      )
-    ];
-
-    return charts.PieChart<String>(
-      series,
-      animate: true,
-      defaultRenderer:
-      charts.ArcRendererConfig(arcWidth: 60, arcRendererDecorators: [
-        charts.ArcLabelDecorator(labelPosition: charts.ArcLabelPosition.inside)
-      ]),
+    return PieChart(
+      PieChartData(
+        sections: [
+          PieChartSectionData(
+            value: 12, // Projets en cours
+            title: '12',
+            color: Colors.blue,
+            radius: 50,
+          ),
+          PieChartSectionData(
+            value: 8, // Projets terminés
+            title: '8',
+            color: Colors.green,
+            radius: 50,
+          ),
+          PieChartSectionData(
+            value: 2, // Projets annulés
+            title: '2',
+            color: Colors.red,
+            radius: 50,
+          ),
+        ],
+        sectionsSpace: 2,
+        centerSpaceRadius: 40, // Espace au centre du graphique
+      ),
     );
   }
 
   // Widget pour la gestion des utilisateurs
   Widget _buildUserManagementSection() {
     return Column(
-        children: [
-          ListTile(
-              leading:
-              Icon(Icons.person_outline, color: kPrimaryColor.withOpacity(0.7)),
-              title:
-              const Text("Activer/Désactiver un utilisateur"),
-              trailing:
-              IconButton(icon:
-              Icon(Icons.edit),onPressed:
-// Action pour gérer les utilisateurs.
-                  (){})),Divider(),ListTile(leading:
-          Icon(Icons.group,color:kPrimaryColor.withOpacity(0.7)),title:
-          Text('Voir tous les utilisateurs'),trailing:
-          IconButton(icon:
-          Icon(Icons.arrow_forward),onPressed:
-// Action pour naviguer vers la liste complète.
-              (){}))]);}}
-
-class ChartData{final String label;final int value;final Color color;ChartData(this.label,this.value,this.color);}
+      children: [
+        ListTile(
+          leading: Icon(Icons.person_outline, color: kPrimaryColor.withOpacity(0.7)),
+          title: const Text("Activer/Désactiver un utilisateur"),
+          trailing: IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {}, // Action pour gérer les utilisateurs.
+          ),
+        ),
+        const Divider(),
+        ListTile(
+          leading: Icon(Icons.group, color: kPrimaryColor.withOpacity(0.7)),
+          title: const Text('Voir tous les utilisateurs'),
+          trailing: IconButton(
+            icon: const Icon(Icons.arrow_forward),
+            onPressed: () {}, // Action pour naviguer vers la liste complète.
+          ),
+        ),
+      ],
+    );
+  }
+}

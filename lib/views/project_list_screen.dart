@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../models/project_model.dart';
 import '../state_management/provider/project_provider.dart';
+import 'components/project_card.dart';
 import 'create_projet_screen.dart';
 
 class ProjetListScreen extends StatefulWidget {
@@ -31,7 +32,9 @@ class _ProjectListScreenState extends State<ProjetListScreen> {
     List<ProjectModel> projects = projectProvider.projects;
     // Filtrer les projets en fonction de la recherche
     if (_searchQuery.isNotEmpty){
-      projects =projects.where((project) => project.title.toLowerCase().contains(_searchQuery.toLowerCase())).toList();
+      projects = projects.where((project) =>
+          (project.title?.toLowerCase() ?? '').contains(_searchQuery.toLowerCase())
+      ).toList();
     }
     // Filtrer les projets en fonction du statut
     if (_filterStatus != 'Tous'){
@@ -93,8 +96,8 @@ class _ProjectListScreenState extends State<ProjetListScreen> {
             child: ListView.builder(
               itemCount: projects.length,
               itemBuilder: (context, index) {
-                final projet = projects[index];
-                return ProjectCard(projet: projet); // Utiliser un widget personnalisé
+                final project = projects[index];
+                return ProjectCard(project: project); // Utiliser un widget personnalisé
               },
             ),
           ),

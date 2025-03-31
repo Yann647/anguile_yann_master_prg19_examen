@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -96,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
                 trailing:
                 Icon(Icons.arrow_forward_ios, color: kPrimaryColor),
                 onTap: () async {
-                  await authService.signOut();
+                  await authService.signOut(context);
                   Navigator.pushReplacementNamed(context, '/login');
                 },
               ),
