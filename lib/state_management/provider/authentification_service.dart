@@ -44,4 +44,15 @@ class AuthentificationService with ChangeNotifier {
     context.read<AuthentificationService>().setMyUserConnected(null);
   }
 
+  // Méthode pour réinitialiser le mot de passe
+  Future<void> resetPassword({required String email}) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      print("Email de réinitialisation envoyé à $email");
+    } catch (e) {
+      print("Erreur lors de l'envoi de l'email de réinitialisation : $e");
+      throw Exception("Impossible d'envoyer l'email de réinitialisation.");
+    }
+  }
+
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="sn.supinfo.master_prg_19">
+    package="sn.supinfo.anguile_yann_master_prg19_examen">
 
     <!-- Internet permission for development and app functionality -->
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -8,7 +8,7 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="master_prg_19"
+        android:label="anguile_yann_master_prg19_examen"
         android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"

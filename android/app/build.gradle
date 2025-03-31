@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "sn.supinfo. anguile_yann_master_prg19_examen"
+    namespace = "sn.supinfo.anguile_yann_master_prg19_examen"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
