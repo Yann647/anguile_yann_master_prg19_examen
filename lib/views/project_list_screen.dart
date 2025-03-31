@@ -2,6 +2,10 @@ import 'package:anguile_yann_master_prg19_examen/common/constante_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/project_model.dart';
+import '../state_management/provider/project_provider.dart';
+import 'create_projet_screen.dart';
+
 class ProjetListScreen extends StatefulWidget {
   const ProjetListScreen({super.key});
 

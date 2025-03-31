@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../common/constante_colors.dart';
+import '../models/project_model.dart';
+import '../state_management/provider/project_provider.dart';
+import 'create_task_screen.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
   final String projectId;

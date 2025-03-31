@@ -63,7 +63,7 @@ class TaskDetailScreen extends StatelessWidget {
                 Chip(
                   label: Text(task.status),
                   backgroundColor:
-                  task.status == 'En cours' ? kPrimaryColor : kGreyColor,
+                  task.status == 'En cours' ? kPrimaryColor : kgreyColor,
                 ),
               ],
             ),
