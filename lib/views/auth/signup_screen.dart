@@ -27,41 +27,81 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isLoading =false;
   String? errorMessage = '';
 
-  Future<void>_signUp() async {
-    setState(() => isLoading = true);
-    await authService.createUserWitchEmailAndPassword(
-        email: _emailController.text,
-        password: _passWordController.text
-    );
+  Future<void> _signUp() async {
+    setState(() {
+      isLoading = true;
+      errorMessage = '';
+    });
 
-    MyUserModel user = MyUserModel(
-      uid:  authService.user?.uid,
-      email:  authService.user?.email,
-      nom:  _nomController.text,
-      prenom:  _prenomController.text,
-    );
+    try {
+      print("Attempting to create user with email: ${_emailController.text}  ${_passWordController.text} ");
 
-    await _userDatabase.saveUserDataToFireStore(user);
-    Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
-            "Inscription réussie !",
-            style: TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.bold
-            ),
-          ),
-          duration: Duration(seconds: 5),
-          backgroundColor: kGreenColor,
-        )
-    );
-    try{
-      setState(() => isLoading = false);
-    }on FirebaseAuthException catch(e) {
+      await authService.createUserWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passWordController.text
+      );
+
+      print("User created successfully: ${authService.user?.uid}");
+
+      // Only proceed with the rest if user creation was successful
+      if (authService.user?.uid != null) {
+        MyUserModel user = MyUserModel(
+          uid: authService.user?.uid,
+          email: authService.user?.email,
+          nom: _nomController.text,
+          prenom: _prenomController.text,
+        );
+
+        print("Saving user data to Firestore");
+        await _userDatabase.saveUserDataToFireStore(user);
+        print("User data saved successfully");
+
+        setState(() => isLoading = false);
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                "Inscription réussie !",
+                style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              duration: Duration(seconds: 5),
+              backgroundColor: kGreenColor,
+            )
+        );
+      } else {
+        throw FirebaseAuthException(
+            code: 'unknown',
+            message: 'User creation succeeded but returned null user'
+        );
+      }
+    } on FirebaseAuthException catch(e) {
+      print("Firebase Auth Exception: ${e.code} - ${e.message}");
       setState(() {
         isLoading = false;
         errorMessage = e.message;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              errorMessage ?? "Erreur d'authentification",
+              style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.bold
+              ),
+            ),
+            duration: Duration(seconds: 5),
+            backgroundColor: kErrorColor,
+          )
+      );
+    } catch (e) {
+      print("General Exception: $e");
+      setState(() {
+        isLoading = false;
+        errorMessage = e.toString();
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -77,6 +117,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             backgroundColor: kErrorColor,
           )
       );
+    } finally {
+      // Make sure loading state is turned off no matter what
+      if (isLoading) {
+        setState(() => isLoading = false);
+      }
     }
   }
 

@@ -10,9 +10,7 @@ class AuthentificationService with ChangeNotifier {
 
   User? get user => _user;
   MyUserModel? get myUserModel => _myUserModel;
-
   MyUserModel? get currentUser => _myUserModel;
-
   Stream<User?> get autStateChanges => _auth.authStateChanges();
 
   AuthentificationService() {
@@ -27,18 +25,18 @@ class AuthentificationService with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signInWitchEmailAndPassword({
+  Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
-  Future<void> createUserWitchEmailAndPassword({
+  Future<void> createUserWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
-    await _auth.signInWithEmailAndPassword(email: email, password: password);
+    await _auth.createUserWithEmailAndPassword(email: email, password: password);
   }
 
   Future<void> signOut(BuildContext context) async {
@@ -56,5 +54,4 @@ class AuthentificationService with ChangeNotifier {
       throw Exception("Impossible d'envoyer l'email de réinitialisation.");
     }
   }
-
 }
